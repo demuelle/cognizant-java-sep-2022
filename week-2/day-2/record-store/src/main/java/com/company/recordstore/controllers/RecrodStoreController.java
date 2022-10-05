@@ -22,6 +22,7 @@ public class RecrodStoreController {
     ));
 
     @RequestMapping(value = "/record", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
     public List<Record> getRecords() {
         return recordList;
     }
