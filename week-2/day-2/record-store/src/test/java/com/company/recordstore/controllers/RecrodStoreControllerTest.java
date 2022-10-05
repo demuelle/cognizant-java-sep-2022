@@ -12,12 +12,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.Assert.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
+// Based on the activity in class on 10/5
 @RunWith(SpringRunner.class)
 @WebMvcTest(RecrodStoreController.class)
 public class RecrodStoreControllerTest {
@@ -34,11 +33,11 @@ public class RecrodStoreControllerTest {
 
     @Test
     public void shouldReturnAllRecordsInCollection() throws Exception {
-        // Arrange and Act
-        mockMvc.perform(get("/record"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0]").isNotEmpty());
+            // Arrange and Act
+            mockMvc.perform(get("/record"))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$[0]").isNotEmpty());
     }
 
     @Test
@@ -64,4 +63,44 @@ public class RecrodStoreControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(content().json(outputRecordJson));
     }
+
+    @Test
+    public void shouldRespondWithNoContentWhenDeletingARecord() throws Exception {
+        // Arrange and Act
+        mockMvc.perform(delete("/record/{id}", 1))
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void shouldReturnOneRecordOnGetByIdRequestAndHaveStatusOk() throws Exception {
+        Record outputRecord = new Record("Weezer", "Weezer (Blue)", 2);
+
+        String outputRecordJson = mapper.writeValueAsString(outputRecord);
+
+        mockMvc.perform(get("/record/{id}", 2))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json(outputRecordJson));
+    }
+
+
+    @Test
+    public void shouldGiveANoContentHttpStatusWhenPutRecordIsRequested() throws Exception {
+        Record inputRecord = new Record();
+        inputRecord.setTitle("Rubber Soul");
+        inputRecord.setArtist("The Beatles");
+
+        String inputRecordJson = mapper.writeValueAsString(inputRecord);
+
+        mockMvc.perform(put("/record/{id}", 4)
+                        .content(inputRecordJson)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isNoContent());
+    }
+
+
+
 }
