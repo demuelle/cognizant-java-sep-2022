@@ -7,6 +7,8 @@ public class Record {
     private String artist;
     private int id;
 
+    public Record() {}
+
     public Record(String title, String artist) {
         this.title = title;
         this.artist = artist;

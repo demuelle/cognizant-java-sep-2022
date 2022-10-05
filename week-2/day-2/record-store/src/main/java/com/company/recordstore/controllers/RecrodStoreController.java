@@ -1,9 +1,8 @@
 package com.company.recordstore.controllers;
 
 import com.company.recordstore.models.Record;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,8 +21,54 @@ public class RecrodStoreController {
             new Record("MC Hammer", "Please Hammer Don't Hurt Em", currentId++)
     ));
 
-    @RequestMapping(value = "/records", method = RequestMethod.GET)
+    @RequestMapping(value = "/record", method = RequestMethod.GET)
     public List<Record> getRecords() {
         return recordList;
     }
+
+    @RequestMapping(value = "/record", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public Record addARecord(@RequestBody Record record) {
+        record.setId(currentId);
+        currentId = currentId + 1;
+        recordList.add(record);
+
+        return record;
+    }
+
+    @RequestMapping(value = "/record/{id}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public Record lookupRecordById(@PathVariable int id) {
+        for (int i = 0; i < recordList.size(); i++) {
+            if (recordList.get(i).getId() == id) {
+                return recordList.get(i);
+            }
+        }
+        return null;
+    }
+
+
+    @RequestMapping(value="/record/{id}", method=RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateRecord(@PathVariable int id, @RequestBody Record record) {
+        record.setId(id);
+        for (int i = 0; i < recordList.size(); i++) {
+            if (recordList.get(i).getId() == id) {
+                recordList.set(i, record);
+                break;  // ends the closest for loop. effectively ending the method
+            }
+        }
+    }
+
+    @RequestMapping(value="/record/{id}", method=RequestMethod.DELETE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteRecord(@PathVariable int id) {
+        for (int i = 0; i < recordList.size(); i++) {
+            if (recordList.get(i).getId() == id) {
+                recordList.remove(i);
+                return; // ends the method
+            }
+        }
+    }
+
 }
