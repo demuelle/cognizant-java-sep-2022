@@ -37,7 +37,14 @@ public class RecrodStoreControllerTest {
             mockMvc.perform(get("/record"))
                     .andDo(print())
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$[0]").isNotEmpty());
+                    .andExpect(jsonPath("$[0]").isNotEmpty())
+                    .andExpect(jsonPath("$[0].title").isNotEmpty())
+                    .andExpect(jsonPath("$[0].artist").isNotEmpty())
+                    .andExpect(jsonPath("$[0].id").isNotEmpty()
+//                    )
+//                    .andExpect(jsonPath("$[0].runtime").isNotEmpty()
+
+                    );
     }
 
     @Test
