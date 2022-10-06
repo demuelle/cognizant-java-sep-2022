@@ -19,13 +19,13 @@ public class RecrodStoreController {
             new Record("The Black Crowes", "Shake Your MoneyMaker", "1990", currentId++),
             new Record("Weezer", "Weezer (Blue)", "1994", currentId++),
             new Record("Taylor Swift", "Lover", "2019", currentId++),
-            new Record("Jason Isbell", "Southeastern", "2013", currentId++),
+            new Record("The Black Crowes", "The Southern Harmony and Musical Companion", "1994", currentId++),
             new Record("MC Hammer", "Please Hammer Don't Hurt Em", "1990", currentId++)
     ));
 
     @RequestMapping(value = "/record", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public List<Record> getRecords(@RequestParam(required = false) String artist) {
+    public List<Record> getRecords(@RequestParam(required = false) String artist, @RequestParam(required = false) String year) {
         System.out.println("Parameter on getRecords is " + artist);
         List<Record> returnVal = recordList;
 
@@ -34,6 +34,13 @@ public class RecrodStoreController {
                     .filter(record -> record.getArtist().contains(artist))
                     .collect(Collectors.toList());
         }
+
+        if (year != null) {
+            returnVal = recordList.stream()
+                    .filter(record -> record.getYear().contains(year))
+                    .collect(Collectors.toList());
+        }
+
         return returnVal;
     }
 
