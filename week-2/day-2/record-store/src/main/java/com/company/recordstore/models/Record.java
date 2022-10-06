@@ -6,10 +6,10 @@ import java.util.Objects;
 
 public class Record {
 
-    @NotEmpty(message = "You must supply a value for title.")
-    private String title;
     @NotEmpty(message = "You must supply a value for artist.")
     private String artist;
+    @NotEmpty(message = "You must supply a value for title.")
+    private String title;
 
     @NotEmpty(message = "You must supply a value for year.")
 
@@ -20,15 +20,15 @@ public class Record {
 
     public Record() {}
 
-    public Record(String title, String artist, String year) {
-        this.title = title;
+    public Record(String artist, String title, String year) {
         this.artist = artist;
+        this.title = title;
         this.year = year;
     }
 
-    public Record(String title, String artist, String year, int id) {
-        this.title = title;
+    public Record(String artist, String title, String year, int id) {
         this.artist = artist;
+        this.title = title;
         this.year = year;
         this.id = id;
     }

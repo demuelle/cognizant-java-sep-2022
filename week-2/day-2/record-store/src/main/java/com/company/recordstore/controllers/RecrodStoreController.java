@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class RecrodStoreController {
@@ -24,8 +25,16 @@ public class RecrodStoreController {
 
     @RequestMapping(value = "/record", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public List<Record> getRecords() {
-        return recordList;
+    public List<Record> getRecords(@RequestParam(required = false) String artist) {
+        System.out.println("Parameter on getRecords is " + artist);
+        List<Record> returnVal = recordList;
+
+        if (artist != null) {
+            returnVal = recordList.stream()
+                    .filter(record -> record.getArtist().contains(artist))
+                    .collect(Collectors.toList());
+        }
+        return returnVal;
     }
 
     @RequestMapping(value = "/record", method = RequestMethod.POST)
