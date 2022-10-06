@@ -4,6 +4,7 @@ import com.company.recordstore.models.Record;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +30,7 @@ public class RecrodStoreController {
 
     @RequestMapping(value = "/record", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public Record addARecord(@RequestBody Record record) {
+    public Record addARecord(@RequestBody @Valid Record record) {
         record.setId(currentId);
         currentId = currentId + 1;
         recordList.add(record);

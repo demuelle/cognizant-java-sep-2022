@@ -1,9 +1,11 @@
 package com.company.recordstore.models;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Objects;
 
 public class Record {
     private String title;
+    @NotEmpty(message = "You must supply a value for artist.")
     private String artist;
     private int id;
 
