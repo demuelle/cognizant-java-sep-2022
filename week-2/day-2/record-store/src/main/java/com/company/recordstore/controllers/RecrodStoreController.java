@@ -15,11 +15,11 @@ public class RecrodStoreController {
     private int currentId = 1;
 
     private List<Record> recordList = new ArrayList<>(Arrays.asList(
-            new Record("The Black Crowes", "Shake Your MoneyMaker", currentId++),
-            new Record("Weezer", "Weezer (Blue)", currentId++),
-            new Record("Taylor Swift", "Lover", currentId++),
-            new Record("Jason Isbell", "Southeastern", currentId++),
-            new Record("MC Hammer", "Please Hammer Don't Hurt Em", currentId++)
+            new Record("The Black Crowes", "Shake Your MoneyMaker", "1990", currentId++),
+            new Record("Weezer", "Weezer (Blue)", "1994", currentId++),
+            new Record("Taylor Swift", "Lover", "2019", currentId++),
+            new Record("Jason Isbell", "Southeastern", "2013", currentId++),
+            new Record("MC Hammer", "Please Hammer Don't Hurt Em", "1990", currentId++)
     ));
 
     @RequestMapping(value = "/record", method = RequestMethod.GET)
@@ -52,7 +52,7 @@ public class RecrodStoreController {
 
     @RequestMapping(value="/record/{id}", method=RequestMethod.PUT)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateRecord(@PathVariable int id, @RequestBody Record record) {
+    public void updateRecord(@PathVariable int id, @RequestBody @Valid Record record) {
         record.setId(id);
         for (int i = 0; i < recordList.size(); i++) {
             if (recordList.get(i).getId() == id) {

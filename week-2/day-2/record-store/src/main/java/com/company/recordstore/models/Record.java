@@ -1,24 +1,35 @@
 package com.company.recordstore.models;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class Record {
+
+    @NotEmpty(message = "You must supply a value for title.")
     private String title;
     @NotEmpty(message = "You must supply a value for artist.")
     private String artist;
+
+    @NotEmpty(message = "You must supply a value for year.")
+
+    @Size(min = 4, max = 4, message = "Year must be exactly 4 digits.")
+    private String year;
+
     private int id;
 
     public Record() {}
 
-    public Record(String title, String artist) {
+    public Record(String title, String artist, String year) {
         this.title = title;
         this.artist = artist;
+        this.year = year;
     }
 
-    public Record(String title, String artist, int id) {
+    public Record(String title, String artist, String year, int id) {
         this.title = title;
         this.artist = artist;
+        this.year = year;
         this.id = id;
     }
 
@@ -38,6 +49,14 @@ public class Record {
         this.artist = artist;
     }
 
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
     public int getId() {
         return id;
     }
@@ -51,12 +70,12 @@ public class Record {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Record record = (Record) o;
-        return id == record.id && Objects.equals(title, record.title) && Objects.equals(artist, record.artist);
+        return id == record.id && Objects.equals(title, record.title) && Objects.equals(artist, record.artist) && Objects.equals(year, record.year);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, artist, id);
+        return Objects.hash(title, artist, year, id);
     }
 
     @Override
@@ -64,6 +83,7 @@ public class Record {
         return "Record{" +
                 "title='" + title + '\'' +
                 ", artist='" + artist + '\'' +
+                ", year='" + year + '\'' +
                 ", id=" + id +
                 '}';
     }

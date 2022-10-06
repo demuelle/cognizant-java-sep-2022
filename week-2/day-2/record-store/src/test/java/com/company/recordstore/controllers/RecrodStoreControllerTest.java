@@ -52,12 +52,14 @@ public class RecrodStoreControllerTest {
         Record inputRecord = new Record();
         inputRecord.setTitle("Rubber Soul");
         inputRecord.setArtist("The Beatles");
+        inputRecord.setYear("1970");
 
         String inputRecordJson = mapper.writeValueAsString(inputRecord);
 
         Record outputRecord = new Record();
         outputRecord.setTitle("Rubber Soul");
         outputRecord.setArtist("The Beatles");
+        outputRecord.setYear("1970");
         outputRecord.setId(6);
 
         String outputRecordJson = mapper.writeValueAsString(outputRecord);
@@ -81,7 +83,7 @@ public class RecrodStoreControllerTest {
 
     @Test
     public void shouldReturnOneRecordOnGetByIdRequestAndHaveStatusOk() throws Exception {
-        Record outputRecord = new Record("Weezer", "Weezer (Blue)", 2);
+        Record outputRecord = new Record("Weezer", "Weezer (Blue)", "1994", 2);
 
         String outputRecordJson = mapper.writeValueAsString(outputRecord);
 
@@ -97,6 +99,8 @@ public class RecrodStoreControllerTest {
         Record inputRecord = new Record();
         inputRecord.setTitle("Rubber Soul");
         inputRecord.setArtist("The Beatles");
+        inputRecord.setYear("1970");
+
 
         String inputRecordJson = mapper.writeValueAsString(inputRecord);
 
@@ -106,6 +110,38 @@ public class RecrodStoreControllerTest {
                 )
                 .andDo(print())
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    public void shouldRespondWith422WhenRecordIsAddedWithoutYear() throws Exception {
+        Record inputRecord = new Record();
+        inputRecord.setTitle("Rubber Soul");
+        inputRecord.setArtist("The Beatles");
+
+        String inputRecordJson = mapper.writeValueAsString(inputRecord);
+
+        mockMvc.perform(post("/record")
+                        .content(inputRecordJson)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
+    public void shouldRespondWith422WhenRecordIsUpdatedWithoutYear() throws Exception {
+        Record inputRecord = new Record();
+        inputRecord.setTitle("Rubber Soul");
+        inputRecord.setArtist("The Beatles");
+
+        String inputRecordJson = mapper.writeValueAsString(inputRecord);
+
+        mockMvc.perform(put("/record/{id}", 4)
+                        .content(inputRecordJson)
+                        .contentType(MediaType.APPLICATION_JSON)
+                )
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 
 
