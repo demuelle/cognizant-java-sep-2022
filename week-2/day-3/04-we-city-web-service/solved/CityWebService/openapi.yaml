@@ -1,0 +1,91 @@
+openapi: 3.0.0
+info:
+  title: City List Service
+  description: >-
+    A simple service that allows CRUD operations for a city list
+    system.
+  version: 0.0.1
+servers:
+  - url: 'http://localhost:8080'
+    description: Local dev server
+paths:
+  /city:
+    get:
+      summary: Retrieves the list of cities in the API
+      responses:
+        '200':
+          description: An array of City objects
+    post:
+      summary: Creates a new city entry with the given information
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              # we are referencing the City object definition found at the bottom of the file
+              $ref: '#/components/schemas/City'
+      responses:
+        '201':
+          description: A city object
+          content:
+            application/json:
+              schema:
+                # we are referencing the City object definition found at the bottom of the file
+                $ref: '#/components/schemas/City'
+        '422':
+          description: Incomplete city information. Some required fields missing.
+          
+  /city/{name}:
+    # GET, DELETE, and PUT are all under this path entry
+    get:
+      summary: Retrieves the entry for the city with the given name.
+      parameters: 
+        - name: name
+          in: path
+          required: true
+          description: Name of the city you would like to retrieve.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: City object matching given name.
+          content:
+            application/json:
+              schema:
+                # we are referencing the City object definition found at the bottom of the file
+                $ref: '#/components/schemas/City'
+        '404':
+          description: City name could not be found
+      
+    delete:
+      summary: Deletes the entry for the city with the given ID.
+      parameters: 
+        - name: name
+          in: path
+          required: true
+          description: Name of the city you would like to delete.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: City successfully deleted.
+        '404':
+          description: City name could not be found
+
+# This section defines the City object that goes back and forth as JSON
+components:
+  schemas:
+    City:
+      properties:
+        name:
+          type: string
+        state:
+          type: string
+        population:
+          type: integer
+        capital:
+          type: boolean
+      required: 
+        - name
+        - state
+        - population
