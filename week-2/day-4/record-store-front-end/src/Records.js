@@ -19,6 +19,9 @@ function Records() {
 
 
     function addClick() {
+        const now = new Date();
+        setScopedRecord({ id: 0, artist: "", album: "", year: now.getFullYear() });
+        setShowForm(true);
     }
 
     function notify({ action, record, error }) {
@@ -43,8 +46,13 @@ function Records() {
                 setShowForm(true);
                 setScopedRecord(record);
                 return;
+            case "add":
+                setRecords([...records, record]);
+                break;
             default:
-                alert("INVALID ACTION!", action);
+                console.log("INVALID ACTION!", action);
+                console.log("also this... INVALID ACTION!" + action);
+                alert("INVALID ACTION! " + action);
         }
 
         setError("");
