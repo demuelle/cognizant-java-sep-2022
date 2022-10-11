@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -21,8 +22,8 @@ public class Customer {
     private String company;
     private String phone;
 
-    // TODO: have a set of notes
-
+    @OneToMany(mappedBy = "customerId", cascade= CascadeType.ALL, fetch = FetchType.EAGER)
+    private Set<Note> notes;
 
     public Integer getId() {
         return id;
@@ -64,17 +65,25 @@ public class Customer {
         this.phone = phone;
     }
 
+    public Set<Note> getNotes() {
+        return notes;
+    }
+
+    public void setNotes(Set<Note> notes) {
+        this.notes = notes;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return Objects.equals(id, customer.id) && Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && Objects.equals(company, customer.company) && Objects.equals(phone, customer.phone);
+        return Objects.equals(id, customer.id) && Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && Objects.equals(company, customer.company) && Objects.equals(phone, customer.phone) && Objects.equals(notes, customer.notes);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, company, phone);
+        return Objects.hash(id, firstName, lastName, company, phone, notes);
     }
 
     @Override
@@ -85,6 +94,7 @@ public class Customer {
                 ", lastName='" + lastName + '\'' +
                 ", company='" + company + '\'' +
                 ", phone='" + phone + '\'' +
+                ", notes=" + notes +
                 '}';
     }
 }
