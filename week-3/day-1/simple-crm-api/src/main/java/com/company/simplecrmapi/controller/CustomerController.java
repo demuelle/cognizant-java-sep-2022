@@ -16,9 +16,21 @@ public class CustomerController {
 
     @GetMapping("/customer")
     @ResponseStatus(HttpStatus.OK)
-    public List<Customer> getAllCustomers() {
+    public List<Customer> getAllCustomers(@RequestParam(required = false) String company, @RequestParam(required = false) String lastName) {
+        if (company != null && lastName != null) {
+            return customerRepository.findByCompanyAndLastName(company, lastName);
+        } else if (company != null) {
+            return customerRepository.findByCompany(company);
+        }
         return customerRepository.findAll();
     }
+
+    @GetMapping("/customer/company/{company}")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Customer> getCustomersByCompany(@PathVariable String company) {
+        return customerRepository.findByCompany(company);
+    }
+
 
     @PostMapping("/customer")
     @ResponseStatus(HttpStatus.CREATED)
