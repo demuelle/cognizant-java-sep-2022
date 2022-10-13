@@ -1,0 +1,28 @@
+{
+    "title": "Father of the Bride",
+    "artist": {
+        "id": 1,
+        "name": "Vampire Weekend",
+        "instagram": "@modernVampires",
+        "twitter": "@vampire_weekend"
+    },
+    "label": {
+        "id": 1,
+        "name": "Immortal Records",
+        "website": "www.immortalrecords.com"
+    },
+    "releaseDate": "2019-06-14",
+    "listPrice": 12.99,
+    "tracks": [
+        {
+            "title": "Sunflower",
+            "runTime": 196
+        },
+        {
+            "id": 3,
+            "albumId": 1,
+            "title": "Harmony Hall",
+            "runTime": 211
+        }
+    ]
+}
