@@ -225,10 +225,10 @@ public class TrackRepositoryTests {
         track.setAlbumId(album1.getId());
         track = trackRepository.save(track);
 
-        List<Track> tList = trackRepository.findAllTracksByAlbumId(album.getId());
+        List<Track> tList = trackRepository.findByAlbumId(album.getId());
         assertEquals(tList.size(), 1);
 
-        tList = trackRepository.findAllTracksByAlbumId(album1.getId());
+        tList = trackRepository.findByAlbumId(album1.getId());
         assertEquals(tList.size(), 2);
 
     }

@@ -16,7 +16,7 @@ public class Label implements Serializable {
     @Id
     @Column(name = "label_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "labelId")
@@ -25,11 +25,11 @@ public class Label implements Serializable {
     private String name;
     private String website;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -54,13 +54,12 @@ public class Label implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Label label = (Label) o;
-        return Objects.equals(getName(), label.getName()) &&
-                Objects.equals(getWebsite(), label.getWebsite());
+        return Objects.equals(id, label.id) && Objects.equals(albums, label.albums) && Objects.equals(name, label.name) && Objects.equals(website, label.website);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getWebsite());
+        return Objects.hash(id, albums, name, website);
     }
 
     @Override

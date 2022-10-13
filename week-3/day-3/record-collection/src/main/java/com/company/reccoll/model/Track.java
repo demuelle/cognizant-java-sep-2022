@@ -14,16 +14,16 @@ public class Track implements Serializable {
     @Id
     @Column(name = "track_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private int albumId;
     private String title;
     private int runtime;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -56,15 +56,12 @@ public class Track implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Track track = (Track) o;
-        return getId() == track.getId() &&
-                getAlbumId() == track.getAlbumId() &&
-                getRunTime() == track.getRunTime() &&
-                Objects.equals(getTitle(), track.getTitle());
+        return albumId == track.albumId && runtime == track.runtime && Objects.equals(id, track.id) && Objects.equals(title, track.title);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getAlbumId(), getTitle(), getRunTime());
+        return Objects.hash(id, albumId, title, runtime);
     }
 
     @Override

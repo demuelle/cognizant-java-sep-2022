@@ -16,7 +16,7 @@ public class Artist implements Serializable {
     @Id
     @Column(name = "artist_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "artistId")
@@ -26,11 +26,11 @@ public class Artist implements Serializable {
     private String instagram;
     private String twitter;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -63,15 +63,12 @@ public class Artist implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Artist artist = (Artist) o;
-        return getId() == artist.getId() &&
-                Objects.equals(getName(), artist.getName()) &&
-                Objects.equals(getInstagram(), artist.getInstagram()) &&
-                Objects.equals(getTwitter(), artist.getTwitter());
+        return Objects.equals(id, artist.id) && Objects.equals(albums, artist.albums) && Objects.equals(name, artist.name) && Objects.equals(instagram, artist.instagram) && Objects.equals(twitter, artist.twitter);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getInstagram(), getTwitter());
+        return Objects.hash(id, albums, name, instagram, twitter);
     }
 
     @Override

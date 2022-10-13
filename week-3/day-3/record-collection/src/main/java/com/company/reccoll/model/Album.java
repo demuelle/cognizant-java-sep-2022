@@ -23,7 +23,7 @@ public class Album implements Serializable {
     @Id
     @Column(name = "album_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "albumId")
@@ -38,11 +38,11 @@ public class Album implements Serializable {
     private int labelId;
     private BigDecimal listPrice;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -86,22 +86,25 @@ public class Album implements Serializable {
         this.listPrice = listPrice;
     }
 
+    public Set<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(Set<Track> tracks) {
+        this.tracks = tracks;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Album album = (Album) o;
-        return getId() == album.getId() &&
-                getArtistId() == album.getArtistId() &&
-                getLabelId() == album.getLabelId() &&
-                Objects.equals(getTitle(), album.getTitle()) &&
-                Objects.equals(getReleaseDate(), album.getReleaseDate()) &&
-                Objects.equals(getListPrice(), album.getListPrice());
+        return artistId == album.artistId && labelId == album.labelId && Objects.equals(id, album.id) && Objects.equals(tracks, album.tracks) && Objects.equals(title, album.title) && Objects.equals(releaseDate, album.releaseDate) && Objects.equals(listPrice, album.listPrice);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTitle(), getArtistId(), getReleaseDate(), getLabelId(), getListPrice());
+        return Objects.hash(id, tracks, title, artistId, releaseDate, labelId, listPrice);
     }
 
     @Override

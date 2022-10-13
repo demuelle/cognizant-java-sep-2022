@@ -33,7 +33,7 @@ public class AlbumViewModelController {
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.BAD_GATEWAY)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateAnAlbum(@RequestBody AlbumViewModel albumViewModel, @PathVariable int id) {
         if (albumViewModel.getId() != id) {
             // freak the heck out!!!!! with an exception!!!!
@@ -43,4 +43,10 @@ public class AlbumViewModelController {
         serviceLayer.updateAlbum(albumViewModel);
     }
 
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAlbum(@PathVariable int id) {
+        serviceLayer.deleteAlbum(id);
+    }
 }
