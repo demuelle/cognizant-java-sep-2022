@@ -120,4 +120,36 @@ public class ServiceLayer {
 
         return returnVal;
     }
+
+    @Transactional
+    public void updateAlbum(AlbumViewModel albumViewModel) {
+        // do not need to update artist or label - out of scope for this method
+        // but I may need to update the artistID in the album record
+        // and the labelId in the album record
+        //   ... in the database
+        Album a = new Album();
+        a.setTitle(albumViewModel.getTitle());
+        Artist theNewArtist = albumViewModel.getArtist();
+        int theNewArtistId = theNewArtist.getId();;
+        a.setArtistId(theNewArtistId);
+        a.setLabelId(albumViewModel.getLabel().getId());
+        a.setReleaseDate(albumViewModel.getReleaseDate());
+        a.setListPrice(albumViewModel.getListPrice());
+        a.setId(albumViewModel.getId());
+
+        a = albumRepository.save(a);
+        // update all the tracks
+        //   delete all the tracks currently associated with the album
+        List<Track> oldTracks = trackRepository.findAllTracksByAlbumId(a.getId());
+
+        oldTracks.stream()
+                .forEach(t -> trackRepository.deleteById(t.getId()));
+        //   add all the tracks provided in the argument (albumViewModel.getTracks())
+        Set<Track> newTracks = albumViewModel.getTracks();
+
+        for (Track newTrack : newTracks) {
+            newTrack.setAlbumId(a.getId());
+            trackRepository.save(newTrack);
+        }
+    }
 }
