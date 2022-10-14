@@ -76,20 +76,6 @@ public class AlbumRepositoryTests {
 
     }
 
-    @Test(expected  = DataIntegrityViolationException.class)
-    public void addWithRefIntegrityException() {
-
-        Album album = new Album();
-        album.setTitle("Greatest Hits");
-        album.setArtistId(54);
-        album.setLabelId(91);
-        album.setReleaseDate(LocalDate.of(2010, 1, 5));
-        album.setListPrice(new BigDecimal("21.95"));
-
-        album = albumRepository.save(album);
-
-    }
-
     @Test
     public void getAllAlbums() {
 

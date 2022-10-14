@@ -47,7 +47,7 @@ public class ServiceLayer {
         a = albumRepository.save(a);
 
         // get the album id and set the album id field for each track
-        Set<Track> tracks = viewModel.getTracks();
+        List<Track> tracks = viewModel.getTracks();
 
         for(Track track : tracks) {
             track.setAlbumId(a.getId());
@@ -56,7 +56,7 @@ public class ServiceLayer {
         }
 
         // get the list of tracks back out of the database because now they have full album id info
-        tracks = new HashSet<>(trackRepository.findByAlbumId(a.getId()));
+        tracks = trackRepository.findByAlbumId(a.getId());
 
         // reassemble my view model to return
         viewModel.setTracks(tracks);
@@ -99,9 +99,7 @@ public class ServiceLayer {
         returnVal.setListPrice(album.getListPrice());
 
         List<Track> trackList = trackRepository.findByAlbumId(album.getId());
-        // albumviewmodel contains a set of tracks, so we need to create a set
-        Set<Track> trackSet = new HashSet<>(trackList);
-        returnVal.setTracks(trackSet);
+        returnVal.setTracks(trackList);
 
         return returnVal;
     }
@@ -121,19 +119,29 @@ public class ServiceLayer {
         return returnVal;
     }
 
-    @Transactional
     public void deleteAlbum(int id) {
-        List<Track> tracks = trackRepository.findByAlbumId(id);
-        for (Track track: tracks) {
-            trackRepository.deleteById(track.getId());
-        }
-
+        trackRepository.findByAlbumId(id).stream()
+                .forEach(
+                        t -> trackRepository.deleteById(t.getId())
+                );
         albumRepository.deleteById(id);
-
     }
 
     @Transactional
     public void updateAlbum(AlbumViewModel albumViewModel) {
+        // update all the tracks
+        //   delete all the tracks currently associated with the album
+        List<Track> oldTracks = trackRepository.findByAlbumId(albumViewModel.getId());
+
+        oldTracks.stream()
+                .forEach(t -> trackRepository.delete(t));
+        //   add all the tracks provided in the argument (albumViewModel.getTracks())
+        List<Track> newTracks = albumViewModel.getTracks();
+
+        for (Track newTrack : newTracks) {
+            newTrack.setAlbumId(albumViewModel.getId());
+            trackRepository.save(newTrack);
+        }
         // do not need to update artist or label - out of scope for this method
         // but I may need to update the artistID in the album record
         // and the labelId in the album record
@@ -148,23 +156,7 @@ public class ServiceLayer {
         a.setListPrice(albumViewModel.getListPrice());
         a.setId(albumViewModel.getId());
 
-        a.setTracks(new HashSet<>(trackRepository.findByAlbumId(a.getId())));
+        a.setTracks(trackRepository.findByAlbumId(a.getId()));
         a = albumRepository.save(a);
-        // update all the tracks
-        //   delete all the tracks currently associated with the album
-        List<Track> oldTracks = trackRepository.findByAlbumId(a.getId());
-
-        oldTracks.stream()
-                .forEach(t ->
-
-
-                        trackRepository.delete(t));
-        //   add all the tracks provided in the argument (albumViewModel.getTracks())
-        Set<Track> newTracks = albumViewModel.getTracks();
-
-        for (Track newTrack : newTracks) {
-            newTrack.setAlbumId(a.getId());
-            trackRepository.save(newTrack);
-        }
     }
 }

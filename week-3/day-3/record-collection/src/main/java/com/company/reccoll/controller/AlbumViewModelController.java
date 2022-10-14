@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/completeAlbum")
+@RequestMapping("/albums")
 public class AlbumViewModelController {
     @Autowired
     private ServiceLayer serviceLayer;
@@ -32,14 +32,9 @@ public class AlbumViewModelController {
         return serviceLayer.getAllAlbums();
     }
 
-    @PutMapping("/{id}")
+    @PutMapping()
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateAnAlbum(@RequestBody AlbumViewModel albumViewModel, @PathVariable int id) {
-        if (albumViewModel.getId() != id) {
-            // freak the heck out!!!!! with an exception!!!!
-            System.out.println("Caller has provided different ids in path and body. So, look out!");
-        }
-        albumViewModel.setId(id);
+    public void updateAnAlbum(@RequestBody AlbumViewModel albumViewModel) {
         serviceLayer.updateAlbum(albumViewModel);
     }
 

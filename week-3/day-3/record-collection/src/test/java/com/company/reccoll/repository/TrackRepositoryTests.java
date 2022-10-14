@@ -65,7 +65,7 @@ public class TrackRepositoryTests {
 
         Track track = new Track();
         track.setTitle("The Big Hit");
-        track.setRunTime(180);
+        track.setRuntime(180);
         track.setAlbumId(album.getId());
         track = trackRepository.save(track);
 
@@ -106,12 +106,12 @@ public class TrackRepositoryTests {
 
         Track track = new Track();
         track.setTitle("The Big Hit");
-        track.setRunTime(180);
+        track.setRuntime(180);
         track.setAlbumId(album.getId());
         track = trackRepository.save(track);
 
         track.setTitle("NEW TITLE");
-        track.setRunTime(12);
+        track.setRuntime(12);
 
         trackRepository.save(track);
 
@@ -157,13 +157,13 @@ public class TrackRepositoryTests {
 
         Track track = new Track();
         track.setTitle("The Big Hit");
-        track.setRunTime(180);
+        track.setRuntime(180);
         track.setAlbumId(album.getId());
         track = trackRepository.save(track);
 
         track = new Track();
         track.setTitle("Just A Song");
-        track.setRunTime(120);
+        track.setRuntime(120);
         track.setAlbumId(album1.getId());
         track = trackRepository.save(track);
 
@@ -209,19 +209,19 @@ public class TrackRepositoryTests {
 
         Track track = new Track();
         track.setTitle("The Big Hit");
-        track.setRunTime(180);
+        track.setRuntime(180);
         track.setAlbumId(album.getId());
         track = trackRepository.save(track);
 
         track = new Track();
         track.setTitle("Just A Song");
-        track.setRunTime(120);
+        track.setRuntime(120);
         track.setAlbumId(album1.getId());
         track = trackRepository.save(track);
 
         track = new Track();
         track.setTitle("A Little Tune");
-        track.setRunTime(100);
+        track.setRuntime(100);
         track.setAlbumId(album1.getId());
         track = trackRepository.save(track);
 

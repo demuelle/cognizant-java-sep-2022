@@ -10,16 +10,17 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/labels")
 public class LabelController {
     @Autowired
     LabelRepository repo;
 
-    @GetMapping("/labels")
+    @GetMapping()
     public List<Label> getLabels() {
         return repo.findAll();
     }
 
-    @GetMapping("/labels/{id}")
+    @GetMapping("/{id}")
     public Label getLabelById(@PathVariable int id) {
         Optional<Label> returnVal = repo.findById(id);
         if (returnVal.isPresent()) {
@@ -29,19 +30,19 @@ public class LabelController {
         }
     }
 
-    @PostMapping("/labels")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Label addLabel(@RequestBody Label label) {
         return repo.save(label);
     }
 
-    @PutMapping("/labels")
+    @PutMapping()
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateLabel(@RequestBody Label label) {
         repo.save(label);
     }
 
-    @DeleteMapping("/labels/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteLabel(@PathVariable int id) {
         repo.deleteById(id);

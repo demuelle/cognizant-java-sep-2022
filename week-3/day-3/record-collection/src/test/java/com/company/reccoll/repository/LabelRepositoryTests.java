@@ -1,5 +1,6 @@
 package com.company.reccoll.repository;
 
+import com.company.reccoll.model.Album;
 import com.company.reccoll.model.Label;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

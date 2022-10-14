@@ -11,23 +11,21 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "album")
-public class Album implements Serializable {
+public class Album {
 
     @Id
     @Column(name = "album_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "albumId")
-    private Set<Track> tracks = new HashSet<>();
+    private List<Track> tracks = new ArrayList<>();
 
     private String title;
     private int artistId;
@@ -44,6 +42,14 @@ public class Album implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public List<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(List<Track> tracks) {
+        this.tracks = tracks;
     }
 
     public String getTitle() {
@@ -86,20 +92,22 @@ public class Album implements Serializable {
         this.listPrice = listPrice;
     }
 
-    public Set<Track> getTracks() {
-        return tracks;
-    }
-
-    public void setTracks(Set<Track> tracks) {
-        this.tracks = tracks;
-    }
-
+    // https://stackoverflow.com/questions/55621145/how-to-work-with-hibernates-persistentbag-not-obeying-list-equals-contract
+    // need to fix the check of track equality because of a bug in Hibernate
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Album album = (Album) o;
-        return artistId == album.artistId && labelId == album.labelId && Objects.equals(id, album.id) && Objects.equals(tracks, album.tracks) && Objects.equals(title, album.title) && Objects.equals(releaseDate, album.releaseDate) && Objects.equals(listPrice, album.listPrice);
+        return artistId == album.artistId
+                && labelId == album.labelId
+                && Objects.equals(id, album.id)
+                && Objects.deepEquals(
+                (tracks != null? tracks.toArray(): new Track[0]),
+                (album.tracks != null? album.tracks.toArray(): new Track[0]))
+                && Objects.equals(title, album.title)
+                && Objects.equals(releaseDate, album.releaseDate)
+                && Objects.equals(listPrice, album.listPrice);
     }
 
     @Override
@@ -111,6 +119,7 @@ public class Album implements Serializable {
     public String toString() {
         return "Album{" +
                 "id=" + id +
+                ", tracks=" + tracks +
                 ", title='" + title + '\'' +
                 ", artistId=" + artistId +
                 ", releaseDate=" + releaseDate +

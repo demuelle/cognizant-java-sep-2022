@@ -10,16 +10,17 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/tracks")
 public class TrackController {
     @Autowired
     TrackRepository repo;
 
-    @GetMapping("/tracks")
+    @GetMapping()
     public List<Track> getTracks() {
         return repo.findAll();
     }
 
-    @GetMapping("/tracks/{id}")
+    @GetMapping("/{id}")
     public Track getTrackById(@PathVariable int id) {
         Optional<Track> returnVal = repo.findById(id);
         if (returnVal.isPresent()) {
@@ -29,19 +30,19 @@ public class TrackController {
         }
     }
 
-    @PostMapping("/tracks")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Track addTrack(@RequestBody Track track) {
         return repo.save(track);
     }
 
-    @PutMapping("/tracks")
+    @PutMapping()
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateTrack(@RequestBody Track track) {
         repo.save(track);
     }
 
-    @DeleteMapping("/tracks/{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTrack(@PathVariable int id) {
         repo.deleteById(id);

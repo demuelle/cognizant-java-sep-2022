@@ -4,23 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "artist")
-public class Artist implements Serializable {
+public class Artist {
 
     @Id
     @Column(name = "artist_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "artistId")
-    private Set<Album> albums = new HashSet<>();
 
     private String name;
     private String instagram;
@@ -63,12 +57,12 @@ public class Artist implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Artist artist = (Artist) o;
-        return Objects.equals(id, artist.id) && Objects.equals(albums, artist.albums) && Objects.equals(name, artist.name) && Objects.equals(instagram, artist.instagram) && Objects.equals(twitter, artist.twitter);
+        return Objects.equals(id, artist.id) && Objects.equals(name, artist.name) && Objects.equals(instagram, artist.instagram) && Objects.equals(twitter, artist.twitter);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, albums, name, instagram, twitter);
+        return Objects.hash(id, name, instagram, twitter);
     }
 
     @Override

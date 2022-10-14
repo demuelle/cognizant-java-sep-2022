@@ -9,7 +9,7 @@ import java.util.Objects;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "track")
-public class Track implements Serializable {
+public class Track {
 
     @Id
     @Column(name = "track_id")
@@ -43,11 +43,11 @@ public class Track implements Serializable {
         this.title = title;
     }
 
-    public int getRunTime() {
+    public int getRuntime() {
         return runtime;
     }
 
-    public void setRunTime(int runtime) {
+    public void setRuntime(int runtime) {
         this.runtime = runtime;
     }
 
@@ -70,7 +70,7 @@ public class Track implements Serializable {
                 "id=" + id +
                 ", albumId=" + albumId +
                 ", title='" + title + '\'' +
-                ", runTime=" + runtime +
+                ", runtime=" + runtime +
                 '}';
     }
 }

@@ -4,23 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Table(name = "label")
-public class Label implements Serializable {
+public class Label {
 
     @Id
     @Column(name = "label_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "labelId")
-    private Set<Album> albums = new HashSet<>();
 
     private String name;
     private String website;
@@ -54,12 +48,12 @@ public class Label implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Label label = (Label) o;
-        return Objects.equals(id, label.id) && Objects.equals(albums, label.albums) && Objects.equals(name, label.name) && Objects.equals(website, label.website);
+        return Objects.equals(id, label.id) && Objects.equals(name, label.name) && Objects.equals(website, label.website);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, albums, name, website);
+        return Objects.hash(id, name, website);
     }
 
     @Override

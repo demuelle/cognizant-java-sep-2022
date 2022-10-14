@@ -20,6 +20,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.*;
@@ -65,11 +66,11 @@ public class AlbumViewModelControllerTest {
 
         Track track1 = new Track();
         track1.setTitle("I'm Mad At You");
-        track1.setRunTime(210);
+        track1.setRuntime(210);
         Track track2 = new Track();
         track2.setTitle("I'm Madder Now");
-        track2.setRunTime(199);
-        Set<Track> tracks = new HashSet<>(Arrays.asList(track1, track2));
+        track2.setRuntime(199);
+        List<Track> tracks = Arrays.asList(track1, track2);
         inputAlbumViewModel.setTracks(tracks);
 
         inputAlbumJson = mapper.writeValueAsString(inputAlbumViewModel);
@@ -83,15 +84,15 @@ public class AlbumViewModelControllerTest {
 
         Track outtrack1 = new Track();
         outtrack1.setTitle("I'm Mad At You");
-        outtrack1.setRunTime(210);
+        outtrack1.setRuntime(210);
         outtrack1.setId(1);
         outtrack1.setAlbumId(89);
         Track outtrack2 = new Track();
         outtrack2.setTitle("I'm Madder Now");
-        outtrack2.setRunTime(199);
+        outtrack2.setRuntime(199);
         outtrack2.setId(2);
         outtrack2.setAlbumId(89);
-        Set<Track> outtracks = new HashSet<>(Arrays.asList(outtrack1, outtrack1));
+        List<Track> outtracks = Arrays.asList(outtrack1, outtrack1);
         outputAlbumViewModel.setTracks(outtracks);
         outputAlbumViewModel.setId(89);
         outputAlbumJson = mapper.writeValueAsString(outputAlbumViewModel);
