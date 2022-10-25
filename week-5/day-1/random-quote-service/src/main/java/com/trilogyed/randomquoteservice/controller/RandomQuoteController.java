@@ -1,9 +1,17 @@
 package com.trilogyed.randomquoteservice.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 @RestController
@@ -11,6 +19,32 @@ public class RandomQuoteController {
 
     Random random = new Random();
 
+    @Autowired
+    private DiscoveryClient discoveryClient;
+
+    private RestTemplate restTemplate = new RestTemplate();
+
+    @Value("${answerServiceName}")
+    private String answerServiceName;
+
+    @Value("${serviceProtocol}")
+    private String serviceProtocol;
+
+    @Value("${servicePath}")
+    private String servicePath;
+
+    @RequestMapping(value="/answerme", method = RequestMethod.GET)
+    public String helloCloud() {
+
+        List<ServiceInstance> instances = discoveryClient.getInstances(answerServiceName);
+
+        String quoteServiceUri = serviceProtocol + instances.get(0).getHost() + ":" + instances.get(0).getPort() + servicePath;
+
+        String magicEightBallAnswer = restTemplate.getForObject(quoteServiceUri, String.class);
+
+        String returnVal = "The Magic Eight Ball says " + magicEightBallAnswer;
+        return returnVal;
+    }
     @GetMapping(value="/quote")
     public String getQuote() {
         ArrayList<String> quoteList = new ArrayList<String>(8);
