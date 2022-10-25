@@ -1,0 +1,16 @@
+{
+    "invoice_id": 1,
+    "name": "Customer 1",
+    "street": "100 Main Street",
+    "city": "Clovis",
+    "state": "CA",
+    "zipcode": "93612",
+    "itemType": "Game",
+    "itemId": 269,
+    "unitPrice": 12.99,
+    "quantity": 12,
+    "subtotal": 155.88,
+    "tax": 9.35,
+    "processingFee": 16.98,
+    "total": 182.21
+}

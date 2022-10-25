@@ -201,4 +201,39 @@ public class ServiceLayerTest {
         assertEquals(expectedOutput, actualAlbumViewModel);
 
     }
+
+    @Test
+    public void shouldFindAlbum(){
+        //        Arrange
+        AlbumViewModel expectedOutput = new AlbumViewModel();
+        expectedOutput.setId(1);
+        expectedOutput.setTitle("All the Hits!");
+        expectedOutput.setReleaseDate(LocalDate.of(1984, 6, 22));
+        expectedOutput.setListPrice(new BigDecimal("18.99"));
+
+        Artist outputArtist = new Artist();
+        outputArtist.setId(45);
+        outputArtist.setInstagram("@RockStar");
+        outputArtist.setName("The GOAT");
+        outputArtist.setTwitter("@TheRockStar");
+        expectedOutput.setArtist(outputArtist);
+
+        Label outputLabel = new Label();
+        outputLabel.setId(10);
+        outputLabel.setName("Blue Note");
+        outputLabel.setWebsite("www.bluenote.com");
+        expectedOutput.setLabel(outputLabel);
+
+        Track outputTrack = new Track();
+        outputTrack.setId(1);
+        outputTrack.setAlbumId(1);
+        outputTrack.setRuntime(180);
+        outputTrack.setTitle("Number 1 Hit!");
+        List<Track> outputTrackList = Arrays.asList(outputTrack);
+        expectedOutput.setTracks(outputTrackList);
+        //        Act
+        AlbumViewModel actualAlbumViewModel = serviceLayer.findAlbum(1);
+        //        Assert
+        assertEquals(expectedOutput, actualAlbumViewModel);
+    }
 }

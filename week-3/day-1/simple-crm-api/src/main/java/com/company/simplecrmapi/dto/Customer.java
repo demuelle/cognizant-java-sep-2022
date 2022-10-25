@@ -22,6 +22,7 @@ public class Customer {
     private String company;
     private String phone;
 
+    //    @OneToMany(mappedBy = "customerId", cascade= CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @OneToMany(mappedBy = "customerId", cascade= CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Note> notes;
 

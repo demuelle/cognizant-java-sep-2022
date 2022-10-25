@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.HashMap;
+
 @RestControllerAdvice
 public class ControllerExceptionHandler {
 
@@ -26,5 +28,10 @@ public class ControllerExceptionHandler {
         ResponseEntity<CustomErrorResponse> returnVal = new ResponseEntity<>(error, returnHttpStatus);
 
         return returnVal;
+    }
+
+    @ExceptionHandler(value = {CustomExcepctionFromThisApp.class})
+    public ResponseEntity<String> handleCustomException(CustomExcepctionFromThisApp ex) {
+       return new ResponseEntity<>("You did something wrong. Bad you.", HttpStatus.BAD_REQUEST);
     }
 }

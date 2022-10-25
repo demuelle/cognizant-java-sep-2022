@@ -38,6 +38,7 @@ public class CustomerRepositoryTest {
         customer.setLastName("J'lastName");
         customer.setPhone("333-444-5678");
         customer.setCompany("Acme, Inc.");
+        customerRepository.save(customer);
 
         Note note = new Note();
         note.setContent("He says he's gonna buy a LOT!!!!");
@@ -50,7 +51,6 @@ public class CustomerRepositoryTest {
 //        noteSet.add(note2);
 
 //        Customer customerAfterSave = customerRepository.save(customer); // same as below.
-        customerRepository.save(customer);
 
         note.setCustomerId(customer.getId());
         note2.setCustomerId(customer.getId());
@@ -62,5 +62,14 @@ public class CustomerRepositoryTest {
 
         Set notesAfterSaveAndRetrieve = customerList.get(0).getNotes();
         assertEquals(2, notesAfterSaveAndRetrieve.size());
+
+        List<Note> allTheNotes = noteRepository.findAll();
+        System.out.println("Before deleting, there are " + allTheNotes.size() + " notes.");
+//        customerRepository.delete(customerList.get(0));
+        customerList.get(0).setNotes(new HashSet<Note>());
+        customerRepository.deleteById(customerList.get(0).getId());
+        allTheNotes = noteRepository.findAll();
+        assertEquals(0, allTheNotes.size());
+
     }
 }
