@@ -1,0 +1,569 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /tshirt:
+    get:
+      tags:
+        - t-shirt-controller
+      operationId: getAllTShirts
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TShirtViewModel'
+    put:
+      tags:
+        - t-shirt-controller
+      operationId: updateTShirt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TShirtViewModel'
+        required: true
+      responses:
+        '204':
+          description: No Content
+    post:
+      tags:
+        - t-shirt-controller
+      operationId: createTShirt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TShirtViewModel'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TShirtViewModel'
+  /game:
+    get:
+      tags:
+        - game-controller
+      operationId: getAllGames
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GameViewModel'
+    put:
+      tags:
+        - game-controller
+      operationId: updateGame
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameViewModel'
+        required: true
+      responses:
+        '204':
+          description: No Content
+    post:
+      tags:
+        - game-controller
+      operationId: createGame
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameViewModel'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GameViewModel'
+  /console:
+    get:
+      tags:
+        - console-controller
+      operationId: getAllConsoles
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConsoleViewModel'
+    put:
+      tags:
+        - console-controller
+      operationId: updateConsole
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsoleViewModel'
+        required: true
+      responses:
+        '204':
+          description: No Content
+    post:
+      tags:
+        - console-controller
+      operationId: createConsole
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsoleViewModel'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ConsoleViewModel'
+  /invoice:
+    get:
+      tags:
+        - invoice-controller
+      operationId: findAllInvoices
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvoiceViewModel'
+    post:
+      tags:
+        - invoice-controller
+      operationId: purchaseItem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoiceViewModel'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InvoiceViewModel'
+  /tshirt/{id}:
+    get:
+      tags:
+        - t-shirt-controller
+      operationId: getTShirt
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TShirtViewModel'
+    delete:
+      tags:
+        - t-shirt-controller
+      operationId: deleteTShirt
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '204':
+          description: No Content
+  /tshirt/size/{size}:
+    get:
+      tags:
+        - t-shirt-controller
+      operationId: getTShirtsBySize
+      parameters:
+        - name: size
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TShirtViewModel'
+  /tshirt/color/{color}:
+    get:
+      tags:
+        - t-shirt-controller
+      operationId: getTShirtsByColor
+      parameters:
+        - name: color
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TShirtViewModel'
+  /invoice/{id}:
+    get:
+      tags:
+        - invoice-controller
+      operationId: findInvoice
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/InvoiceViewModel'
+  /invoice/cname/{name}:
+    get:
+      tags:
+        - invoice-controller
+      operationId: findInvoicesByCustomerName
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvoiceViewModel'
+  /game/{id}:
+    get:
+      tags:
+        - game-controller
+      operationId: getGameInfo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/GameViewModel'
+    delete:
+      tags:
+        - game-controller
+      operationId: deleteGame
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '204':
+          description: No Content
+  /game/title/{title}:
+    get:
+      tags:
+        - game-controller
+      operationId: getGamesByTitle
+      parameters:
+        - name: title
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GameViewModel'
+  /game/studio/{studio}:
+    get:
+      tags:
+        - game-controller
+      operationId: getGamesByStudio
+      parameters:
+        - name: studio
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GameViewModel'
+  /game/esrbrating/{esrb}:
+    get:
+      tags:
+        - game-controller
+      operationId: getGamesByEsrbRating
+      parameters:
+        - name: esrb
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GameViewModel'
+  /console/{id}:
+    get:
+      tags:
+        - console-controller
+      operationId: getConsole
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ConsoleViewModel'
+    delete:
+      tags:
+        - console-controller
+      operationId: deleteConsole
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: No Content
+  /console/manufacturer/{manufacturer}:
+    get:
+      tags:
+        - console-controller
+      operationId: getConsoleByManufacturer
+      parameters:
+        - name: manufacturer
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConsoleViewModel'
+components:
+  schemas:
+    TShirtViewModel:
+      required:
+        - color
+        - description
+        - price
+        - quantity
+        - size
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        size:
+          type: string
+        color:
+          type: string
+        description:
+          type: string
+        price:
+          maximum: 999.99
+          exclusiveMaximum: false
+          minimum: 0
+          exclusiveMinimum: false
+          type: number
+        quantity:
+          maximum: 50000
+          minimum: 1
+          type: integer
+          format: int64
+    GameViewModel:
+      required:
+        - description
+        - esrbRating
+        - price
+        - quantity
+        - studio
+        - title
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        title:
+          type: string
+        esrbRating:
+          type: string
+        description:
+          type: string
+        price:
+          maximum: 999.99
+          exclusiveMaximum: false
+          minimum: 0
+          exclusiveMinimum: false
+          type: number
+        studio:
+          type: string
+        quantity:
+          maximum: 50000
+          minimum: 1
+          type: integer
+          format: int64
+    ConsoleViewModel:
+      required:
+        - manufacturer
+        - model
+        - price
+        - quantity
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        model:
+          type: string
+        manufacturer:
+          type: string
+        memoryAmount:
+          type: string
+        processor:
+          type: string
+        price:
+          maximum: 999.99
+          exclusiveMaximum: false
+          minimum: 1
+          exclusiveMinimum: false
+          type: number
+        quantity:
+          maximum: 50000
+          minimum: 1
+          type: integer
+          format: int64
+    InvoiceViewModel:
+      required:
+        - city
+        - itemId
+        - itemType
+        - name
+        - quantity
+        - state
+        - street
+        - zipcode
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        street:
+          type: string
+        city:
+          type: string
+        state:
+          maxLength: 2
+          minLength: 2
+          type: string
+        zipcode:
+          type: string
+        itemType:
+          type: string
+        itemId:
+          type: integer
+          format: int64
+        unitPrice:
+          type: number
+        quantity:
+          maximum: 50000
+          minimum: 1
+          type: integer
+          format: int64
+        subtotal:
+          type: number
+        tax:
+          type: number
+        processingFee:
+          type: number
+        total:
+          type: number
