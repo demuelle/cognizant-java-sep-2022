@@ -1,4 +1,4 @@
-use game_store;
+-use game_store;
 
 insert into game(title, esrb_rating, description, price, studio, quantity)
 	values ('World of Goo', 'PG', 'puzzle video game', 12.99, '2D Boy', 25);
