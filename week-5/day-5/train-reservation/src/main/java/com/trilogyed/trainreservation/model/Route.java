@@ -22,13 +22,13 @@ public class Route {
     private String routeName;
     @NotNull(message = "Train id is required")
     @Min(value = 1, message = "Min train id is 1")
-    private int trainId;
+    private Integer trainId;
     @NotNull(message = "Source station id is required")
     @Min(value = 1, message = "Min source station id is 1")
-    private int sourceStationId;
+    private Integer sourceStationId;
     @NotNull(message = "Destination station id is required")
     @Min(value = 1, message = "Min destination station id is 1")
-    private int destinationStationId;
+    private Integer destinationStationId;
 
     public Long getId() {
         return id;

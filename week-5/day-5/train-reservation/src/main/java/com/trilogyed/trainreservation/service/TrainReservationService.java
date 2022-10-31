@@ -1,21 +1,15 @@
 package com.trilogyed.trainreservation.service;
 
 import com.trilogyed.trainreservation.model.Customer;
-import com.trilogyed.trainreservation.repository.CustomerRepository;
 import com.trilogyed.trainreservation.model.Train;
-import com.trilogyed.trainreservation.repository.TrainRepository;
+import com.trilogyed.trainreservation.repository.*;
 import com.trilogyed.trainreservation.model.Station;
-import com.trilogyed.trainreservation.repository.StationRepository;
 import com.trilogyed.trainreservation.model.Route;
-import com.trilogyed.trainreservation.repository.RouteRepository;
 import com.trilogyed.trainreservation.model.RouteStation;
-import com.trilogyed.trainreservation.repository.RouteStationRepository;
 import com.trilogyed.trainreservation.model.Ticket;
-import com.trilogyed.trainreservation.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
