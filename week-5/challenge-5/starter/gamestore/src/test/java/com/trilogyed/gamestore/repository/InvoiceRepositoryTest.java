@@ -59,62 +59,97 @@ public class InvoiceRepositoryTest {
 
     @Test
     public void shouldAddFindDeleteInvoice() {
+        // Build an invoice
+        Invoice invoice = new Invoice();
+        invoice.setUnitPrice(new BigDecimal("5.01"));
+        invoice.setCity("Houston");
+        invoice.setState("WA");
+        invoice.setProcessingFee(new BigDecimal("1000"));
+        invoice.setItemType("Chocolate Bar");
+        invoice.setSubtotal(new BigDecimal("44.41"));
+        invoice.setQuantity(3);
+        invoice.setTax(new BigDecimal("1.11"));
+        invoice.setTotal(new BigDecimal("22.22"));
+        invoice.setZipcode("44334");
+        invoice.setName("adafasfasdfasdf");
 
-        //Arrange
-        TShirt tShirt1 = new TShirt();
-        tShirt1.setSize("M");
-        tShirt1.setColor("Blue");
-        tShirt1.setDescription("v-neck short sleeve");
 
-        //The double quotes forces the decimal point.
-        // an alternative to set BigDecimal is using:
-        // tShirt1.setPrice(new BigDecimal("15.99").setScale(2, RoundingMode.HALF_UP));
-        tShirt1.setPrice(new BigDecimal("15.99"));
+        // save to database
+        invoice = invoiceRepository.save(invoice);
 
-        tShirt1.setQuantity(8);
-        tShirt1 = tShirtRepository.save(tShirt1);
+        // get it back out of the database
+        Invoice invoice2 = invoiceRepository.findById(invoice.getId()).get();
 
-        Invoice invoice1 = new Invoice();
-        invoice1.setName("Joe Black");
-        invoice1.setStreet("123 Main St");
-        invoice1.setCity("any City");
-        invoice1.setState("NY");
-        invoice1.setZipcode("10016");
-        invoice1.setItemType("T-Shirts");
-        invoice1.setItemId(tShirt1.getId());
-        invoice1.setUnitPrice(tShirt1.getPrice());
-        invoice1.setQuantity(2);
+        // confirm that the thing I got back from the database is the thing I wrote the database
+        assertEquals(invoice, invoice2);
 
-        invoice1.setSubtotal(
-                tShirt1.getPrice().multiply(
-                        new BigDecimal(invoice1.getQuantity()))
-        );
+        // delete it
+        invoiceRepository.deleteById(invoice.getId());
 
-        Optional<Tax> tax = taxRepository.findById(invoice1.getState());
-        assertTrue(tax.isPresent());
-        invoice1.setTax(invoice1.getSubtotal().multiply(tax.get().getRate()));
+        // go try to get it again
+        Optional<Invoice> invoice3 = invoiceRepository.findById(invoice.getId());
 
-        Optional<ProcessingFee> processingFee = processingFeeRepository.findById(invoice1.getItemType());
-        assertTrue(processingFee.isPresent());
-        invoice1.setProcessingFee(processingFee.get().getFee());
-
-        invoice1.setTotal(invoice1.getSubtotal().add(invoice1.getTax()).add(invoice1.getProcessingFee()));
-
-        //Act
-        invoice1 = invoiceRepository.save(invoice1);
-        Optional<Invoice> invoice2 = invoiceRepository.findById(invoice1.getId());
-
-        //Assert
-        assertTrue(invoice2.isPresent());
-        assertEquals(invoice1, invoice2.get());
-
-        //Act
-        invoiceRepository.deleteById(invoice1.getId());
-        invoice2 = invoiceRepository.findById(invoice1.getId());
-
-        //Assert
-        assertFalse(invoice2.isPresent());
+        // confirm that it's gone
+        assertEquals(false, invoice3.isPresent());
     }
+//    @Test
+//    public void shouldAddFindDeleteInvoicex() {
+//
+//        //Arrange
+//        TShirt tShirt1 = new TShirt();
+//        tShirt1.setSize("M");
+//        tShirt1.setColor("Blue");
+//        tShirt1.setDescription("v-neck short sleeve");
+//
+//        //The double quotes forces the decimal point.
+//        // an alternative to set BigDecimal is using:
+//        // tShirt1.setPrice(new BigDecimal("15.99").setScale(2, RoundingMode.HALF_UP));
+//        tShirt1.setPrice(new BigDecimal("15.99"));
+//
+//        tShirt1.setQuantity(8);
+//        tShirt1 = tShirtRepository.save(tShirt1);
+//
+//        Invoice invoice1 = new Invoice();
+//        invoice1.setName("Joe Black");
+//        invoice1.setStreet("123 Main St");
+//        invoice1.setCity("any City");
+//        invoice1.setState("NY");
+//        invoice1.setZipcode("10016");
+//        invoice1.setItemType("T-Shirts");
+//        invoice1.setItemId(tShirt1.getId());
+//        invoice1.setUnitPrice(tShirt1.getPrice());
+//        invoice1.setQuantity(2);
+//
+//        invoice1.setSubtotal(
+//                tShirt1.getPrice().multiply(
+//                        new BigDecimal(invoice1.getQuantity()))
+//        );
+//
+//        Optional<Tax> tax = taxRepository.findById(invoice1.getState());
+//        assertTrue(tax.isPresent());
+//        invoice1.setTax(invoice1.getSubtotal().multiply(tax.get().getRate()));
+//
+//        Optional<ProcessingFee> processingFee = processingFeeRepository.findById(invoice1.getItemType());
+//        assertTrue(processingFee.isPresent());
+//        invoice1.setProcessingFee(processingFee.get().getFee());
+//
+//        invoice1.setTotal(invoice1.getSubtotal().add(invoice1.getTax()).add(invoice1.getProcessingFee()));
+//
+//        //Act
+//        invoice1 = invoiceRepository.save(invoice1);
+//        Optional<Invoice> invoice2 = invoiceRepository.findById(invoice1.getId());
+//
+//        //Assert
+//        assertTrue(invoice2.isPresent());
+//        assertEquals(invoice1, invoice2.get());
+//
+//        //Act
+//        invoiceRepository.deleteById(invoice1.getId());
+//        invoice2 = invoiceRepository.findById(invoice1.getId());
+//
+//        //Assert
+//        assertFalse(invoice2.isPresent());
+//    }
 
     @Test
     public void shouldFindByName() {

@@ -66,6 +66,18 @@ public class Tree {
     // print items out in order
     public void printFlatInOrder() {
         System.out.println("Printing out the sorted tree");
+        printNode(this.root);
+        System.out.println("");
+    }
+
+    private void printNode(Node node) {
+        if (node.getLeft() != null) {
+            printNode(node.getLeft());
+        }
+        System.out.print("" + node.getValue() + " ");
+        if (node.getRight() != null) {
+            printNode(node.getRight());
+        }
     }
 
     public boolean searchTree() {
@@ -79,4 +91,14 @@ public class Tree {
         return null;
     }
 }
+
+/*
+                        "Mumford and Sons"
+                "Escape Club"           "Shakespeare's Sister"
+           "A-Ha"        "Josie &"     "Phil Collins"      "U2"
+
+
+
+
+ */
 

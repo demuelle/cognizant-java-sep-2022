@@ -3,6 +3,7 @@ package com.awesomeco.humanresourcesapi.controller;
 import com.awesomeco.humanresourcesapi.EmployeeFeignClient;
 import com.awesomeco.humanresourcesapi.models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +20,7 @@ public class HRController {
     }
 
     @PostMapping("/employee")
+    @ResponseStatus(HttpStatus.CREATED)
     public Employee hire(@RequestBody Employee employee) {
         employee.setStartYear(2022); // TODO: make this dynamic to use the current year
         return employeeApi.hireEmployee(employee);
