@@ -22,6 +22,19 @@ public class Coffee {
     private String origin;
     private BigInteger acidity;
 
+    public Coffee() {
+    }
+
+    public Coffee(Long id, String beanType, String fermentation, String roast, String origin, BigInteger acidity, BigDecimal pricePerPound) {
+        this.id = id;
+        this.beanType = beanType;
+        this.fermentation = fermentation;
+        this.roast = roast;
+        this.origin = origin;
+        this.acidity = acidity;
+        this.pricePerPound = pricePerPound;
+    }
+
     public BigDecimal getPricePerPound() {
         return pricePerPound;
     }
