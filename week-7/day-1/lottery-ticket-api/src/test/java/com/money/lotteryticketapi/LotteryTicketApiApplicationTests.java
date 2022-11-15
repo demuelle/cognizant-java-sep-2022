@@ -1,10 +1,10 @@
-package org.coffee.coffeeordering;
+package com.money.lotteryticketapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CoffeeOrderingApplicationTests {
+class LotteryTicketApiApplicationTests {
 
 	@Test
 	void contextLoads() {
